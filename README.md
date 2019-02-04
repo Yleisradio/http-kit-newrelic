@@ -14,7 +14,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Yleisr
 
 ## License
 
-Copyright © 2019 FIXME
+Copyright © 2019 Yleisradio Oy
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
