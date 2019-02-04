@@ -1,4 +1,4 @@
-(defproject http-kit-newrelic "0.1.0-SNAPSHOT"
+(defproject yleisradio/http-kit-newrelic "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
