@@ -21,6 +21,9 @@ Add this to your Leiningen project.clj `:dependencies`:
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/Yleisradio/http-kit-newrelic. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
+## See also
+https://github.com/Yleisradio/new-reliquary Clojure wrapper for New Relic
+
 ## License
 
 Copyright © 2019 Yleisradio Oy
