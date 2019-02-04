@@ -9,6 +9,9 @@ New Relic instrumentation for [HTTP Kit client](http://www.http-kit.org/client.h
 (http-kit-newrelic/enable! #'org.httpkit.client/request)
 ```
 
+## Contributing
+Bug reports and pull requests are welcome on GitHub at https://github.com/Yleisradio/http-kit-newrelic. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
 ## License
 
 Copyright © 2019 FIXME
