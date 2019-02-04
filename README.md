@@ -1,10 +1,13 @@
 # http-kit-newrelic
 
-A Clojure library designed to ... well, that part is up to you.
+New Relic instrumentation for [HTTP Kit client](http://www.http-kit.org/client.html#options)
 
 ## Usage
 
-FIXME
+```clojure
+(require '[http-kit-newrelic.core :as http-kit-newrelic])
+(http-kit-newrelic/enable! #'org.httpkit.client/request)
+```
 
 ## License
 
