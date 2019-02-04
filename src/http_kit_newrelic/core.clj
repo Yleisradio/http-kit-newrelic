@@ -7,22 +7,22 @@
   [library {:keys [method url]}]
   (let [parsed-uri (try (URI/create url) (catch Exception _))]
     (.build (cond-> (HttpParameters$Builder. library)
-                    method (.procedure (name method))
-                    parsed-uri (.uri parsed-uri)))))
+              method (.procedure (name method))
+              parsed-uri (.uri parsed-uri)))))
 
 (definterface ^:private IRequestTracker
   (track [request opts callback]))
 
 (deftype ^:private RequestTracker [] IRequestTracker
-  (^{Trace {:dispatcher true}} track
-    [_ request opts callback]
-    (let [segment  (-> (NewRelic/getAgent) (.getTransaction) (.startSegment "request"))
-          response (request opts callback)]
-      (future
-        (deref response)
-        (.reportAsExternal segment (new-relic-external-params "http-client" opts))
-        (.end segment))
-      response)))
+         (^{Trace {:dispatcher true}} track
+           [_ request opts callback]
+           (let [segment  (-> (NewRelic/getAgent) (.getTransaction) (.startSegment "request"))
+                 response (request opts callback)]
+             (future
+               (deref response)
+               (.reportAsExternal segment (new-relic-external-params "http-client" opts))
+               (.end segment))
+             response)))
 
 (def ^:private ^IRequestTracker tracker (RequestTracker.))
 
