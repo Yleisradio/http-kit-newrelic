@@ -7,8 +7,6 @@ New Relic instrumentation for [HTTP Kit client](http://www.http-kit.org/client.h
 
 ## Installation
 
-Add this to your Leiningen project.clj `:dependencies`:
-
 [![Clojars Project](https://img.shields.io/clojars/v/yleisradio/http-kit-newrelic.svg)](https://clojars.org/yleisradio/http-kit-newrelic)
 
 ## Usage
