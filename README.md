@@ -2,7 +2,7 @@
 
 New Relic instrumentation for [HTTP Kit client](http://www.http-kit.org/client.html#options)
 
-[![Build Status](https://travis-ci.org/Yleisradio/http-kit-newrelic.svg)](https://travis-ci.org/Yleisradio/http-kit-newrelic)
+[![Build Status](https://travis-ci.com/Yleisradio/http-kit-newrelic.svg)](https://travis-ci.com/Yleisradio/http-kit-newrelic)
 [![Dependencies Status](http://jarkeeper.com/Yleisradio/http-kit-newrelic/status.png)](http://jarkeeper.com/Yleisradio/http-kit-newrelic)
 
 ## Installation
