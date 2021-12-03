@@ -1,0 +1,89 @@
+name: Http-kit-newrelic CI
+
+on:
+  push:
+    branches: [ master ]
+    ignore_tags: "**"
+  pull_request:
+    branches: "**"
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: "17"
+
+      - name: Maven cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-lein-${{ hashFiles('project.clj') }}
+          restore-keys: |
+            ${{ runner.os }}-lein-
+
+      - name: Set environment variables
+        shell: bash
+        run: |
+          echo "ENVIRONMENT=ci" >> $GITHUB_ENV
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+
+      - name: Remove s3 config
+        run: rm .s3_config
+
+  deploy:
+    if: contains(github.ref, 'master')
+    needs: [ test ]
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: "17"
+
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Maven cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-lein-${{ hashFiles('project.clj') }}
+          restore-keys: |
+            ${{ runner.os }}-lein-
+
+      - name: Set version number env variable
+        run: |
+          echo "VERSION_NUMBER=$(./scripts/ci/version.sh)" >> $GITHUB_ENV
+          echo "$(./scripts/ci/version.sh)" > resources/VERSION
+
+      - name: Build docker image
+        run: |
+          lein do deps, uberjar
+          docker build -t yleisradio/http-kit-newrelic:${VERSION_NUMBER} .
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Push image to Amazon ECR
+        env:
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          VERSION_NUMBER: ${{ env.VERSION_NUMBER }}
+        run: |
+          docker tag yleisradio/http-kit-newrelic:$VERSION_NUMBER $ECR_REPOSITORY:$VERSION_NUMBER
+          docker push $ECR_REPOSITORY:$VERSION_NUMBER

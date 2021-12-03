@@ -1,4 +1,4 @@
-(defproject yleisradio/http-kit-newrelic "1.0.0"
+(defproject yleisradio/http-kit-newrelic "1.0.1"
   :description "New Relic instrumentation for HTTP Kit client"
   :url "https://github.com/Yleisradio/http-kit-newrelic"
   :license {:name "Eclipse Public License"
