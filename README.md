@@ -24,7 +24,7 @@ https://github.com/Yleisradio/new-reliquary Clojure wrapper for New Relic
 
 ## License
 
-Copyright © 2019 Yleisradio Oy
+Copyright © 2021 Yleisradio Oy
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
