@@ -37,7 +37,7 @@ jobs:
         run: rm .s3_config
 
   deploy:
-    if: contains(github.ref, 'master')
+    if: contains(github.ref, 'master') || contains(github.head_ref, 'feature/github-actions')
     needs: [ test ]
     runs-on: ubuntu-20.04
 
